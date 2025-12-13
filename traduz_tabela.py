@@ -13,7 +13,7 @@ traducao = {
     "lanthanide": "lantanídeo",
     "actinide": "actinídeo",
     "metalloid": "semimetal",
-    "nonmetal": "não-metal",
+    "nonmetal": "não metal",
     "noble gas": "gás nobre",
     "halogen": "halogênio"
 }
