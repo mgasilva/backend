@@ -35,6 +35,6 @@ def listar_tabela(nome_banco, nome_tabela):
 
     conn.close()
 
-
 # Exemplo de uso:
+
 listar_tabela("tabela_periodica.db", "informacoes")

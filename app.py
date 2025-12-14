@@ -1,6 +1,7 @@
 from flask import Flask
 from elementos import elementos_bp
 from flask_cors import CORS
+from flask_restx import Api
 
 def create_app():
     app = Flask(__name__)
@@ -9,6 +10,14 @@ def create_app():
     return app
 
 app = create_app()
+
+api = Api(
+    app,
+    title="API da Tabela Periódica",
+    version="1.0",
+    description="API REST para consulta e inclusão de dados da Tabela Periódica",
+    doc="/swagger"
+)
 
 if __name__ == "__main__":
     app.run(debug=True)
