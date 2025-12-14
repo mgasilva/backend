@@ -37,4 +37,4 @@ def listar_tabela(nome_banco, nome_tabela):
 
 
 # Exemplo de uso:
-listar_tabela("tabela_periodica.db", "elementos")
+listar_tabela("tabela_periodica.db", "informacoes")

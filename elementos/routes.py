@@ -70,3 +70,32 @@ def detalhe_elemento(numero_atomico):
     }
 
     return elemento
+
+@elementos_bp.route("/<int:numero_atomico>/info_adicional", methods=["GET"])
+def info_adicional_elemento(numero_atomico):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            info
+        FROM informacoes
+        WHERE numero_atomico = ?
+        ORDER BY id
+    """, (numero_atomico,))
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    informacoes = [
+        {
+            "informacoes": row["info"]
+        }
+        for row in rows
+    ]
+
+    return {
+        "numero_atomico": numero_atomico,
+        "info_adicional": informacoes
+    }
+
