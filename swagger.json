@@ -1,0 +1,147 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API da Tabela Periódica",
+    "version": "1.0.0",
+    "description": "API REST para consulta e inclusão de informações sobre elementos químicos"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/elementos": {
+      "get": {
+        "summary": "Lista todos os elementos",
+        "responses": {
+          "200": {
+            "description": "Lista de elementos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Elemento" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/elementos/{numero_atomico}": {
+      "get": {
+        "summary": "Retorna um elemento específico",
+        "parameters": [
+          {
+            "name": "numero_atomico",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Elemento encontrado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Elemento" }
+              }
+            }
+          },
+          "404": {
+            "description": "Elemento não encontrado"
+          }
+        }
+      }
+    },
+    "/elementos/{numero_atomico}/info_adicional": {
+      "get": {
+        "summary": "Lista informações adicionais do elemento",
+        "parameters": [
+          {
+            "name": "numero_atomico",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de informações adicionais",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "numero_atomico": { "type": "integer" },
+                    "info_adicional": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "informacoes": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Adiciona informação adicional ao elemento",
+        "parameters": [
+          {
+            "name": "numero_atomico",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["info"],
+                "properties": {
+                  "info": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Informação adicionada com sucesso"
+          },
+          "400": {
+            "description": "Erro de validação"
+          },
+          "404": {
+            "description": "Elemento não encontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Elemento": {
+        "type": "object",
+        "properties": {
+          "numero_atomico": { "type": "integer" },
+          "simbolo": { "type": "string" },
+          "nome": { "type": "string" },
+          "massa_atomica": { "type": "number" },
+          "categoria": { "type": "string" }
+        }
+      }
+    }
+  }
+}

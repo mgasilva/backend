@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from elementos import elementos_bp
 from flask_cors import CORS
 from flask_restx import Api
+import json
 
 def create_app():
     app = Flask(__name__)
@@ -18,6 +19,11 @@ api = Api(
     description="API REST para consulta e inclusão de dados da Tabela Periódica",
     doc="/swagger"
 )
+
+@app.route("/openapi.json")
+def swagger():
+    with open("swagger.json", "r", encoding="utf-8") as f:
+        return jsonify(json.load(f))
 
 if __name__ == "__main__":
     app.run(debug=True)
